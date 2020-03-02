@@ -1,0 +1,67 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Homework 4</title>
+
+</head>
+
+<body>
+  
+	<div ng-app="app" ng-controller="ctrl">
+    <span>Filter by manufacturer:</span>
+    <select ng-model="selectedManufacturer" ng-options="m for m in manufacturers">
+        <option value selected="selected">All</option>
+    </select>
+    <table>
+        <tr>
+            <td><strong>Manufacturer</strong></td>
+            <td><strong>Model</strong></td>
+            <td ng-click="orderByYear()"><strong>Year</strong></td>
+            <td><strong>Stock</strong></td>
+            <td><strong>Price</strong></td>
+            <td><strong>Option</strong></td>
+        </tr>
+        <tr ng-repeat="car in cars | orderBy: ascend | filter:(!!selectedManufacturer || undefined) && {manufacturer:selectedManufacturer}">
+            <td>{{car.manufacturer}}</td>
+            <td>{{car.model}}</td>
+            <td>{{car.year}}</td>
+            <td>{{car.stock}}</td>
+            <td>{{car.price | currency}}</td>
+            <td><button ng-click="car.stock=car.stock+1">Increment</button></td>
+        </tr>
+    </table>
+	</div>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.7.8/angular.min.js"></script>
+  <script src="cars.js"></script>
+  <script>
+  	let app = angular.module('app', []);
+	app.controller('ctrl', function($scope) {
+        $scope.cars = cars;
+        $scope.ascend = "";
+        $scope.manufacturers = [];
+        for (let i = 0; i < $scope.cars.length; i++) {
+            $scope.cars[i].id = i;
+            if (!$scope.manufacturers.includes($scope.cars[i].manufacturer)) {
+                $scope.manufacturers.push($scope.cars[i].manufacturer)
+            }
+        }
+        $scope.orderByYear = function () {
+            if ($scope.ascend == "")
+            {
+                $scope.ascend = "year";
+            }
+			else if($scope.ascend == "-year"){
+			$scope.ascend = "year"
+			}
+            else
+            {
+                $scope.ascend = "-year";
+            }
+        };
+        console.log($scope.manufacturers);
+    });
+  </script>
+</body>
+</html>

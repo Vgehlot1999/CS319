@@ -1,0 +1,1 @@
+To run the program, simply open the HTML file in chrome or another web browser.

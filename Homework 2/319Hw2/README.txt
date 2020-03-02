@@ -1,0 +1,1 @@
+To run this program properly, please run the server file first, then the client file. The rest of the instructions are explained in the console window.
